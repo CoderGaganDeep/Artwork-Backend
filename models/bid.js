@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      bid.hasOne(models.artwork, { foreignKey: "artworkId" });
+      bid.belongsTo(models.artwork, { foreignKey: "artworkId" });
     }
   }
   bid.init(
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "bid",
       // taken from https://sebhastian.com/sequelize-relation-does-not-exist/#:~:text=The%20relation%20does%20not%20exist,to%20the%20right%20table%20name.
-      freezeTableName: true,
+      // freezeTableName: true,
     }
   );
   return bid;

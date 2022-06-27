@@ -5,11 +5,11 @@ const authMiddleWare = require("./auth/middleware");
 const authRouter = require("./routers/auth");
 const { PORT } = require("./config/constants");
 const artworkRouter = require("./routers/artworkRouter");
+const Artwork = require("./models").artwork;
 
 // Create an express app
 const app = express();
 
-app.use(artworkRouter);
 /**
  * Middlewares
  *
@@ -32,13 +32,16 @@ app.use(bodyParserMiddleWare);
  *
  * Define your routes and attach our routers here (now that middlewares are configured)
  */
-app.get("/", (req, res) => {
-  res.send(data);
+// app.get("/artworks", (req, res) => {
+//   res.send("<h1>Home</h1>");
+// });
+
+app.post("/echo", (req, res) => {
+  res.json(req.body);
 });
 
 // app.use("/me", authRouter);
-// app.use("/space", spacesRouter);
-
+app.use("/artworks", artworkRouter);
 app.use("/auth", authRouter);
 
 // POST endpoint which requires a token for testing purposes, can be removed
