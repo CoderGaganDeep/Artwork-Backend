@@ -19,6 +19,7 @@ module.exports = {
       hearts: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       },
       minimumBid: {
         type: Sequelize.INTEGER,
@@ -32,6 +33,24 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      // bidId: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: "bid",
+      //     key: "id",
+      //   },
+      //   onDelete: "CASCADE",
+      // },
+      // userId: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: "user",
+      //     key: "id",
+      //   },
+      //   onDelete: "CASCADE",
+      // },
     });
   },
   async down(queryInterface, Sequelize) {

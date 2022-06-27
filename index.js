@@ -4,10 +4,12 @@ const corsMiddleWare = require("cors");
 const authMiddleWare = require("./auth/middleware");
 const authRouter = require("./routers/auth");
 const { PORT } = require("./config/constants");
+const artworkRouter = require("./routers/artworkRouter");
 
 // Create an express app
 const app = express();
 
+app.use(artworkRouter);
 /**
  * Middlewares
  *
@@ -30,6 +32,12 @@ app.use(bodyParserMiddleWare);
  *
  * Define your routes and attach our routers here (now that middlewares are configured)
  */
+app.get("/", (req, res) => {
+  res.send(data);
+});
+
+// app.use("/me", authRouter);
+// app.use("/space", spacesRouter);
 
 app.use("/auth", authRouter);
 
