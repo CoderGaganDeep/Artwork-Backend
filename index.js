@@ -5,6 +5,7 @@ const authMiddleWare = require("./auth/middleware");
 const authRouter = require("./routers/auth");
 const { PORT } = require("./config/constants");
 const artworkRouter = require("./routers/artworkRouter");
+const bidRouter = require("./routers/bidRouter");
 const Artwork = require("./models").artwork;
 
 // Create an express app
@@ -42,6 +43,7 @@ app.post("/echo", (req, res) => {
 
 // app.use("/me", authRouter);
 app.use("/artworks", artworkRouter);
+app.use("/bids", bidRouter);
 app.use("/auth", authRouter);
 
 // POST endpoint which requires a token for testing purposes, can be removed
