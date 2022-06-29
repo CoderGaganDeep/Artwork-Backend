@@ -36,6 +36,30 @@ router.get("/:id", async (request, response, next) => {
   }
 });
 
+router.patch("/:id", async (request, response, next) => {
+  try {
+    const { id } = request.params; // receive the artwork id from the thunk
+    const { hearts } = request.body;
+
+    console.log("error from heart:  = ", request.body.hearts);
+
+    Artwork.update(
+      { hearts: request.body.hearts },
+      { where: request.params.id }
+    );
+
+    const artwork = await Artwork.findByPk(id);
+
+    // const artworkUpdated = await artwork.update({
+    //   hearts: hearts,
+    // });
+    response.send(artwork);
+  } catch (error) {
+    console.log("error from Updating my Artwork endPoint: ", error.message);
+    next(error);
+  }
+});
+
 //Export the router.
 
 module.exports = router;
