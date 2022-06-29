@@ -17,7 +17,7 @@ const router = new Router();
 router.get("/", async (request, response, next) => {
   try {
     // strp 2: define a variable (spaces) and find all
-    const allArtworks = await Artwork.findAll();
+    const allArtworks = await Artwork.findAll({ include: [Bid] });
     console.log(allArtworks);
     // step 3:  send the newly find space as a response
     response.send(allArtworks);
