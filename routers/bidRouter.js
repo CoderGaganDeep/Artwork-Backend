@@ -33,7 +33,7 @@ router.post("/", authMiddleware, async (request, response, next) => {
       });
     }
 
-    if (amount < minCurrentBid + 1) {
+    if ((amount < minCurrentBid, 1)) {
       response.status(400);
       response.send("Bad request : Bid should be Highest");
       return;

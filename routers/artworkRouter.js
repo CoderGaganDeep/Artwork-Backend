@@ -3,6 +3,8 @@ const { Router } = require("express");
 const Artwork = require("../models").artwork;
 const Bid = require("../models").bid;
 const authMiddleware = require("../auth/middleware");
+const User = require("../models").user;
+const { toData } = require("../auth/jwt");
 
 //Create a new Router instance.
 const router = new Router();
@@ -56,6 +58,45 @@ router.patch("/:id", async (request, response, next) => {
     response.send(artwork);
   } catch (error) {
     console.log("error from Updating my Artwork endPoint: ", error.message);
+    next(error);
+  }
+});
+
+// create new Artwork from auctions page
+
+router.post("/", authMiddleware, async (request, response, next) => {
+  try {
+    // get user from supplied token
+    const auth =
+      request.headers.authorization && request.headers.authorization.split(" ");
+
+    if (!auth || !(auth[0] === "Bearer") || !auth[1]) {
+      return response.status(401).send({
+        message:
+          "This endpoint requires an Authorization header with a valid token",
+      });
+    }
+
+    const data = toData(auth[1]);
+    const user = await User.findByPk(data.userId);
+    if (!user) {
+      return response.status(404).send({ message: "User does not exist" });
+    }
+
+    const { title, minimumBid, ImageUrl } = request.body;
+    console.log("XXXXXXXXXXX" + title + minimumBid + ImageUrl);
+    const hearts = 0;
+    const newArtwork = await Artwork.create({
+      title: title,
+      minimumBid: minimumBid,
+      hearts: hearts,
+      imageUrl: ImageUrl,
+      userId: user.id,
+    });
+
+    response.send(newArtwork);
+  } catch (error) {
+    console.log("error from bid router: ", error.message);
     next(error);
   }
 });

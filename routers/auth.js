@@ -36,6 +36,9 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/signup", async (req, res) => {
   const { email, password, name, isArtist } = req.body;
+
+  console.log("ARTIST RECIEVD ", isArtist);
+
   if (!email || !password || !name) {
     return res.status(400).send("Please provide an email, password and a name");
   }
